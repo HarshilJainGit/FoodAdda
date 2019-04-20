@@ -92,7 +92,7 @@ app.get('/profile');
 function register(req,res) {
     let numUsers = 0;
     userModel.findAllUsers().then(
-        num => numUsers = num.length
+        num => console.log("function count"+num.length)
     );
     const _id = numUsers+1;
     const userName = req.body.userName;
