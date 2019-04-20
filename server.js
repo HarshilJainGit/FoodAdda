@@ -19,9 +19,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 getRest = () => {
-    request.get('https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco/reviews',options,function(err,res,body){
-        res.send('Wassup');
-    });
+    console.log('InHOme');
+    request.get('https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco/reviews').then(
+        resp => console.log(resp)
+    );
 };
 
 app.get('/home', getRest);
