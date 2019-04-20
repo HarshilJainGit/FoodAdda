@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "webdevproj_sp19_gh",
+=======
+  "name": "finalproj",
+>>>>>>> refs/remotes/origin/master
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
