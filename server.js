@@ -15,7 +15,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-const yelpApi = new Yelp({
+const yelpApi = new yelp({
     consumer_key: 'MYwDRfy56r-jAcraQG0RaQ',
     consumer_secret: '12345',
     token: 'ss4-t75R3qifJTmT5KQT_Wg46lOf_kEMgaX-5ivOLIbO-hHhibMS7SDyAib7Ql5ZL9hQPVnJDup0hVxS9JEy6ND-wmFcid3Hq_se7FMnz06TCwaPCo83iEMLaxW6XHYx',
