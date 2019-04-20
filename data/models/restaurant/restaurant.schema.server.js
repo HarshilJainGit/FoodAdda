@@ -9,6 +9,7 @@ const restaurantSchema =
         email : String,
         website : String,
         address : String,
-        rating : Number
+        rating : Number,
+        reviews : [{type: mongoose.Schema.Types.String, ref: 'ReviewModel'}],
     }, {collection: 'restaurant'});
 module.exports = restaurantSchema;
