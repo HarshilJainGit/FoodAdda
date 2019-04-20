@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 
 getRest = () => {
     return fetch('https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco/reviews').then(
-        rest => rest
+        rest => console.log(rest)
     )
 };
 
