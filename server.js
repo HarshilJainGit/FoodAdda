@@ -33,9 +33,7 @@ app.get('/home', (req, res) => {
 //Get reviews for particular restaurant id
 app.get('/restaurant/:id', (req,res) => {
     console.log(req.params.id);
-    client.reviews( {
-        id : req.params.id
-    }).then ( reviews => {
+    client.reviews(req.params.id).then ( reviews => {
         res.send(reviews.jsonBody);
     }).catch( e => {
         console.log('Error getting reviews');
