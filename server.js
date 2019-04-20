@@ -19,15 +19,25 @@ app.use(function(req, res, next) {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//Get businesses for location
 app.get('/home', (req, res) => {
     client.search({
-        term: 'Four Barrel Coffee',
         location: 'san francisco, ca',
     }).then(response => {
-        res.send(response.jsonBody.businesses[0]);
+        res.send(response.jsonBody.businesses);
     }).catch(e => {
         console.log(e);
     });
+});
+
+//Get restaurant details
+app.get('/restaurant/:id/det', (req,res) => {
+    console.log(req.params.id);
+    client.business(req.params.id).then ( business => {
+        res.send(business.jsonBody);
+    }).catch( e => {
+        console.log('Error getting business details');
+    })
 });
 
 //Get reviews for particular restaurant id
@@ -39,5 +49,6 @@ app.get('/restaurant/:id', (req,res) => {
         console.log('Error getting reviews');
     })
 });
+
 
 app.listen(process.env.PORT || 5000);
