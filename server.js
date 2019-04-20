@@ -93,7 +93,7 @@ function register(req,res) {
     let numUsers = 0;
 
     userModel.findAllUsers().then(
-        num => numUsers = num
+        num => numUsers === num
     );
     const _id = numUsers+1;
     const userName = req.body.userName;
