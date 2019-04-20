@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
-const request = require('request');
 require('./data/db')();
 const yelp = require('yelp-fusion');
 
@@ -29,10 +28,17 @@ app.get('/home', (req, res) => {
     }).catch(e => {
         console.log(e);
     });
-    // console.log('InHOme');
-    // request.get('https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco/reviews').then(
-    //     resp => console.log(resp)
-    // );
+});
+
+//Get reviews for particular restaurant id
+app.get('/restaurant/:id', (req,res) => {
+    client.reviews( {
+        id : req.params.id
+    }).then ( reviews => {
+        res.send(reviews.jsonBody);
+    }).catch( e => {
+        console.log('Error getting reviews');
+    })
 });
 
 app.listen(process.env.PORT || 5000);
