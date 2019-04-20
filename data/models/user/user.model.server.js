@@ -3,7 +3,7 @@ const userSchema = require('./user.schema.server');
 const userModel = mongoose.model('UserModel', userSchema);
 
 findAllUsers = () =>
-    userModel.find();
+    userModel.find({});
 
 findUserByUserName = (userName) =>
     userModel.find({
