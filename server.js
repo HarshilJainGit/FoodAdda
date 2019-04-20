@@ -111,6 +111,7 @@ function register(req,res) {
     console.log(newUser);
     userModel.findUserByUserName(userName).then(function (user) {
         if(!user) {
+            console.log('User not found with username');
             return userModel.createUser(newUser)
         }
         })
