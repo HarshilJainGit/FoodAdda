@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
-
+const request = require('request');
 require('./data/db')();
 
 app.use(function(req, res, next) {
@@ -19,9 +19,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 getRest = () => {
-    return fetch('https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco/reviews').then(
-        rest => console.log(rest)
-    )
+    request.get('https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco/reviews',options,function(err,res,body){
+        res.send('Wassup');
+    });
 };
 
 app.get('/home', getRest);
