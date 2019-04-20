@@ -32,6 +32,7 @@ app.get('/home', (req, res) => {
 
 //Get reviews for particular restaurant id
 app.get('/restaurant/:id', (req,res) => {
+    console.log(req.params.id);
     client.reviews( {
         id : req.params.id
     }).then ( reviews => {
