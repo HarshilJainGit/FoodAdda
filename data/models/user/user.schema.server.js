@@ -8,7 +8,7 @@ const userSchema =
         lastName : String,
         email : String,
         dob : Date,
-        role : String,
+        role: { type: String, enum: ['Admin', 'Foodie', 'Restaurant Owner'] },
         city : String
     }, {collection: 'user'});
 module.exports = userSchema;
