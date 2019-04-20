@@ -1,3 +1,4 @@
+const expressSession = require('express-session');
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
@@ -16,7 +17,14 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.use(expressSession({
+    resave: false, saveUninitialized: true,
+    secret: 'EverythingIsPlanned'
+}));
+
+
 const restDao = require('./data/daos/restaurant.dao.server');
+const userModel = require('./data/models/user/user.model.server');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -59,5 +67,68 @@ app.post('/restaurant',(req, res) => {
         }
     )
 });
+
+function login(req,res) {
+    const userName = req.body.userName;
+    const passWord = req.body.passWord;
+    userModel
+        .findUserByCredentials(userName, passWord)
+        .then(function (user) {
+            if(user) {
+                req.session['currentUser'] = user;
+                res.send(user);
+            } else {
+                res.send(0);
+            }
+        });
+}
+
+//User Login
+app.post('/login',login);
+
+//User Profile
+app.get('/profile');
+
+function register(req,res) {
+    let numUsers = 0;
+    userModel.findAllUsers().then(
+        num => numUsers = num.length
+    );
+    const _id = numUsers+1;
+    const userName = req.body.userName;
+    const lastName = req.body.lastName;
+    const firstName = req.body.firstName;
+    const email = req.body.email;
+    const passWord = req.body.passWord;
+    let newUser = {
+        _id : _id,
+        userName : userName,
+        firstName : firstName,
+        lastName : lastName,
+        email : email,
+        passWord : passWord
+    };
+    userModel.findUserByUserName(userName).then(function (user) {
+        if(!user) {
+            return userModel.createUser(newUser)
+        }
+        })
+        .then(function (user) {
+            req.session['currentUser'] = user;
+            res.send(user);
+        });
+}
+
+//New user registration
+app.post('/register',register);
+
+function logout(req,res) {
+    req.session.destroy();
+    res.send(200);
+}
+
+//Logout User
+app.post('/logout',logout);
+
 
 app.listen(process.env.PORT || 5000);
