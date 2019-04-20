@@ -16,6 +16,8 @@ app.use(function(req, res, next) {
     next();
 });
 
+const restDao = require('./data/daos/restaurant.dao.server');
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -50,5 +52,12 @@ app.get('/restaurant/:id', (req,res) => {
     })
 });
 
+app.post('/restaurant',(req, res) => {
+    restDao.createRestaurant(req.body).then(
+        response => {
+            res.send(response);
+        }
+    )
+});
 
 app.listen(process.env.PORT || 5000);
