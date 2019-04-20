@@ -1,4 +1,4 @@
-const restModel = require('/data/models/restaurant/restaurant.model.server');
+const restModel = require('../models/restaurant/restaurant.model.server');
 
 createRestaurant = (newRest) =>
     restModel.createRestaurant(newRest).then(
