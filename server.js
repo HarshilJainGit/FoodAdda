@@ -18,13 +18,11 @@ app.use(function(req, res, next) {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-getRest = () => {
+app.get('/home', (req, res) => {
     console.log('InHOme');
     request.get('https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco/reviews').then(
         resp => console.log(resp)
     );
-};
-
-app.get('/home', getRest);
+});
 
 app.listen(process.env.PORT || 5000);
