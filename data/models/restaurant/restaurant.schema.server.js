@@ -1,0 +1,14 @@
+const mongoose = require('mongoose');
+const restaurantSchema =
+    mongoose.Schema({
+        _id : Number,
+        name : String,
+        location : String,
+        image_url : String,
+        phone : String,
+        email : String,
+        website : String,
+        address : String,
+        rating : Number
+    }, {collection: 'restaurant'});
+module.exports = restaurantSchema;
