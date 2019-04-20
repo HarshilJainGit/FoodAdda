@@ -25,7 +25,7 @@ app.get('/home', (req, res) => {
         term: 'Four Barrel Coffee',
         location: 'san francisco, ca',
     }).then(response => {
-        res.send(response);
+        res.send(response.jsonBody.businesses[0]);
     }).catch(e => {
         console.log(e);
     });
