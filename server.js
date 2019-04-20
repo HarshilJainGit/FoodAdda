@@ -108,6 +108,7 @@ function register(req,res) {
         email : email,
         passWord : passWord
     };
+    console.log(newUser);
     userModel.findUserByUserName(userName).then(function (user) {
         if(!user) {
             return userModel.createUser(newUser)
