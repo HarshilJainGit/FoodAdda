@@ -91,8 +91,9 @@ app.get('/profile');
 
 function register(req,res) {
     let numUsers = 0;
+
     userModel.findAllUsers().then(
-        num => console.log("function count"+num.length)
+        num => numUsers = num
     );
     const _id = numUsers+1;
     const userName = req.body.userName;
@@ -132,5 +133,12 @@ function logout(req,res) {
 //Logout User
 app.post('/logout',logout);
 
+app.get('/users',(req,res) => {
+    userModel.findAllUsers().then(
+        users => {
+            console.log(users)
+        }
+    );
+});
 
 app.listen(process.env.PORT || 5000);
