@@ -115,6 +115,9 @@ function register(req,res) {
                     }
                 )
             }
+            else {
+                res.send(403);
+            }
         }
         ).then(function (user) {
             req.session['currentUser'] = user;
