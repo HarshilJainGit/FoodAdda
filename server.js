@@ -94,7 +94,7 @@ function register(req,res) {
 
     userModel.findAllUsers().then(
         num => {
-            numUsers = num
+            numUsers = num.length
         }
     );
     const _id = numUsers+1;
