@@ -129,7 +129,7 @@ function logout(req,res) {
 //Logout User
 app.post('/logout',logout);
 
-app.get('/users/:username',(req,res) => {
+app.get('/users/:userName',(req,res) => {
     userModel.findUserByUserName(req.params.userName).then(
         users => {
             res.send(users)
