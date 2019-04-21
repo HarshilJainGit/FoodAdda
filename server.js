@@ -98,7 +98,7 @@ function register(req,res) {
     //     }
     // )
     console.log(numUsers);
-    const userId = Number(numUsers) + 1;
+    const userId = parseInt(Date.now());
     const userName = req.body.userName;
     const lastName = req.body.lastName;
     const firstName = req.body.firstName;
