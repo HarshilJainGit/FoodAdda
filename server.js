@@ -145,7 +145,8 @@ currentUser = (req, res) => {
     const currentUser = req.session['currentUser'];
     console.log(currentUser);
     if(currentUser) {
-        console.log(typeof currentUser._id);
+        console.log(currentUser['_id']);
+        console.log('Id'+currentUser._id);
         userModel.findUserById(currentUser._id)
             .then(user => res.send(user))
     } else {
