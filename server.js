@@ -144,7 +144,4 @@ app.get('/users',(req,res) => {
     );
 });
 
-const userService = require('./data/services/user.service.server')
-userService(app)
-
 app.listen(process.env.PORT || 5000);
