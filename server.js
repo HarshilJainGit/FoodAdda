@@ -141,4 +141,16 @@ app.get('/users/:userName',(req,res) => {
     );
 });
 
+currentUser = (req, res) => {
+    const currentUser = req.session['currentUser'];
+    if(currentUser) {
+        userModel.findUserById(currentUser._id)
+            .then(user => res.send(user))
+    } else {
+        res.sendStatus(403)
+    }
+};
+
+app.get('/currentUser',currentUser);
+
 app.listen(process.env.PORT || 5000);
