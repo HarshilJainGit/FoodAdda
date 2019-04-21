@@ -90,7 +90,7 @@ app.post('/login',login);
 app.get('/profile');
 
 function register(req,res) {
-    const userId = parseInt(Date.now());
+    const userId = Date.now();
     const userName = req.body.userName;
     const lastName = req.body.lastName;
     const firstName = req.body.firstName;
