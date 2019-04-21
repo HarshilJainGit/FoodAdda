@@ -5,12 +5,9 @@ const userModel = mongoose.model('UserModel', userSchema);
 findAllUsers = () =>
     userModel.find();
 
-countUser = () =>
-    userModel.find().count;
-
 findUserByUserName = (userName) =>
-    userModel.find({
-        userName : userName
+    userModel.findOne({
+        userName : String(userName)
     });
 
 findUserByCredentials = (userName,passWord) =>
@@ -23,7 +20,6 @@ createUser = (newUser) =>
     userModel.create(newUser);
 
 module.exports = {
-    countUser,
     findAllUsers,
     findUserByUserName,
     findUserByCredentials,
