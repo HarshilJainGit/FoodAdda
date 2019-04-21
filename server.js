@@ -8,7 +8,7 @@ const yelp = require('yelp-fusion');
 const client = yelp.client('ss4-t75R3qifJTmT5KQT_Wg46lOf_kEMgaX-5ivOLIbO-hHhibMS7SDyAib7Ql5ZL9hQPVnJDup0hVxS9JEy6ND-wmFcid3Hq_se7FMnz06TCwaPCo83iEMLaxW6XHYx');
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin",
-        "http://localhost:5000");
+        "http://localhost:4200");
     res.header("Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods",
