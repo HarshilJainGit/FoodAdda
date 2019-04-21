@@ -146,6 +146,7 @@ app.get('/users/:userName',(req,res) => {
 
 currentUser = (req, res) => {
     const currentUser = req.session['currentUser'];
+    console.log(currentUser);
     if(currentUser) {
         userModel.findUserById(currentUser[0]._id)
             .then(user => res.send(user))
