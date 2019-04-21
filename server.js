@@ -90,14 +90,6 @@ app.post('/login',login);
 app.get('/profile');
 
 function register(req,res) {
-    let numUsers = userModel.countUser();
-
-    // userModel.findAllUsers().then(
-    //     num => {
-    //         numUsers = Number(num.length)
-    //     }
-    // )
-    console.log(numUsers);
     const userId = parseInt(Date.now());
     const userName = req.body.userName;
     const lastName = req.body.lastName;
@@ -113,13 +105,14 @@ function register(req,res) {
         passWord : passWord
     };
     console.log(newUser);
-    userModel.findUserByUserName(userName).then(function (user) {
-        if(!user) {
-            console.log('User not found with username');
-            return userModel.createUser(newUser)
+    userModel.findUserByUserName(userName).then(
+        function (user) {
+            if(!user) {
+                console.log('User not found with username');
+                return userModel.createUser(newUser)
+            }
         }
-        })
-        .then(function (user) {
+        ).then(function (user) {
             req.session['currentUser'] = user;
             res.send(user);
         });
@@ -136,10 +129,10 @@ function logout(req,res) {
 //Logout User
 app.post('/logout',logout);
 
-app.get('/users',(req,res) => {
-    userModel.findAllUsers().then(
+app.get('/users/:username',(req,res) => {
+    userModel.findUserByUserName(req.params.userName).then(
         users => {
-            console.log(users.length)
+            res.send(users)
         }
     );
 });
