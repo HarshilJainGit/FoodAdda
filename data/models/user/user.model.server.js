@@ -11,7 +11,7 @@ findUserByUserName = (userName) =>
     });
 
 findUserByCredentials = (userName,passWord) =>
-    userModel.find({
+    userModel.findOne({
         userName: userName,
         passWord: passWord
     });
