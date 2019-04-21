@@ -54,7 +54,7 @@ app.get('/restaurant/:id/det', (req,res) => {
 app.get('/restaurant/:id', (req,res) => {
     console.log(req.params.id);
     client.reviews(req.params.id).then ( reviews => {
-        res.send(reviews.jsonBody);
+        res.send(reviews.jsonBody.reviews);
     }).catch( e => {
         console.log('Error getting reviews');
     })
