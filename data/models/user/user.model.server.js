@@ -20,7 +20,9 @@ createUser = (newUser) =>
     userModel.create(newUser);
 
 findUserById = userId =>
-    userModel.findById(Number(userId));
+    userModel.findOne({
+        _id: Number(userId)
+    });
 
 module.exports = {
     findAllUsers,
