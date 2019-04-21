@@ -104,16 +104,12 @@ function register(req,res) {
         email : email,
         passWord : passWord
     };
-    console.log(newUser);
     userModel.findUserByUserName(userName).then(
         function (user) {
+            console.log(user);
             if(user === null || user.length === 0) {
                 console.log('User not found with username');
-                userModel.createUser(newUser).then (
-                    newuser => {
-                        console.log(newuser)
-                    }
-                )
+                return userModel.createUser(newUser)
             }
             else {
                 res.send(403);
@@ -124,6 +120,25 @@ function register(req,res) {
             res.send(user);
         });
 }
+
+
+// function register(req, res) {
+//     var username = req.body.username;
+//     var password = req.body.password;
+//     var newUser = {
+//         username: username,
+//         password: password
+//     };
+//     userModel
+//         .findUserByUsername(username)
+//         .then(function (user) {
+//             if(!user) {
+//                 return userModel
+//                     .createUser(newUser)}})
+//         .then(function (user) {
+//             req.session['currentUser'] = user;
+//             res.send(user);});
+// }
 
 //New user registration
 app.post('/register',register);
