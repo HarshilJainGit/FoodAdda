@@ -21,7 +21,7 @@ createUser = (newUser) =>
 
 findUserById = userId =>
     userModel.findOne({
-        _id: Number(userId)
+        _id: parseInt(userId)
     });
 
 module.exports = {
