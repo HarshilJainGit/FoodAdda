@@ -138,7 +138,7 @@ app.post('/logout',logout);
 app.get('/users',(req,res) => {
     userModel.findAllUsers().then(
         users => {
-            console.log(users)
+            console.log(users.length)
         }
     );
 });
