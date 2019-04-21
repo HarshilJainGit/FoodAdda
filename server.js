@@ -109,9 +109,9 @@ function register(req,res) {
             console.log(user);
             if(user === null || user.length === 0) {
                 console.log('User not found with username');
-                req.session['currentUser'] = user;
+                req.session['currentUser'] = newUser;
                 userModel.createUser(newUser);
-                res.send(user);
+                res.send(newUser);
             }
             else {
                 res.send(403);
