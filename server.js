@@ -90,21 +90,22 @@ app.post('/login',login);
 app.get('/profile');
 
 function register(req,res) {
-    let numUsers = 0;
+    let numUsers = userModel.countUser();
 
-    userModel.findAllUsers().then(
-        num => {
-            numUsers = num.length
-        }
-    );
-    const _id = Number(numUsers)+Number(1);
+    // userModel.findAllUsers().then(
+    //     num => {
+    //         numUsers = Number(num.length)
+    //     }
+    // )
+    console.log(numUsers);
+    const userId = Number(numUsers) + 1;
     const userName = req.body.userName;
     const lastName = req.body.lastName;
     const firstName = req.body.firstName;
     const email = req.body.email;
     const passWord = req.body.passWord;
     let newUser = {
-        _id : _id,
+        _id : userId,
         userName : userName,
         firstName : firstName,
         lastName : lastName,
