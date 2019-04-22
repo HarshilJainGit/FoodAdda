@@ -246,9 +246,9 @@ getUsers = (req,res) => {
 app.get('/api/user/',getUsers);
 
 searchRest = (req,res) => {
-    client.businessMatch({
-        city: req.query.location,
-        name: req.query.term
+    client.search({
+        location: req.query.location,
+        term: req.query.term
     }).then(response => {
         res.send(response.jsonBody.businesses)
     }).catch(e => {
