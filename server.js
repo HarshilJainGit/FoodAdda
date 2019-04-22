@@ -177,11 +177,10 @@ favourite = (req,res) => {
     const currentUser = req.session['currentUser'];
     if(currentUser) {
         userModel.findUserById(currentUser._id)
-            .then(user => res.send(user))
-            .then(user => {
-                userModel.addToFavourites(user._id,req.params.id).then(
-                    user => {
-                        res.send(user)
+            .then((user) => {
+                return userModel.addToFavourites(user._id,req.params.id).then(
+                    user1 => {
+                        res.send(user1)
                     }
                 )
             })
