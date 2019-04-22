@@ -61,6 +61,7 @@ app.get('/restaurant/:id/det', (req,res) => {
 //Get reviews for particular restaurant id
 app.get('/restaurant/:id', (req,res) => {
     let reviewsList = [];
+
     client.reviews(req.params.id).then ( reviews => {
         return reviewsList.concat(reviews.jsonBody.reviews);
     }).then((ress) => {
@@ -70,7 +71,12 @@ app.get('/restaurant/:id', (req,res) => {
             }
         )
     }
-    ).catch( e => {
+    ).catch( () => {
+        revModel.getReviews(req.params.id).then(
+            resp => {
+                res.send(resp)
+            }
+        )
         console.log('Error getting reviews');
     })
 });
@@ -258,20 +264,6 @@ searchRest = (req,res) => {
 
 app.get('/:search',searchRest);
 
-searchhh = (req,res) => {
-    client.businessMatch({
-        city: 'Boston',
-        name: 'Boston Shawarma',
-        address1 : ' '
-    }).then(response => {
-        res.send(response.jsonBody.businesses)
-    }).catch(e => {
-        console.log(e);
-    });
-};
-
-app.get('/blanksearch',searchhh);
-
 addReview = (req,res) => {
     const currentUserId = req.session['currentUser']._id;
     const revId = Date.now();
@@ -293,5 +285,23 @@ addReview = (req,res) => {
 };
 
 app.post('/api/restaurant/:id/review',addReview);
+
+
+
+
+searchhh = (req,res) => {
+    client.businessMatch({
+        city: 'Boston',
+        name: 'Boston Shawarma',
+        address1 : ' '
+    }).then(response => {
+        res.send(response.jsonBody.businesses)
+    }).catch(e => {
+        console.log(e);
+    });
+};
+
+app.get('/blanksearch',searchhh);
+
 
 app.listen(process.env.PORT || 4000);
