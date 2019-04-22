@@ -5,6 +5,12 @@ const reviewModel = mongoose.model('ReviewModel', reviewSchema);
 createReview = (newReview) =>
     reviewModel.create(newReview);
 
+getReviews = (restId) =>
+    reviewModel.find({
+        restaurantId:restId
+    });
+
 module.exports = {
-    createReview
+    createReview,
+    getReviews
 };

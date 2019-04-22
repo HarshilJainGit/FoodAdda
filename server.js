@@ -60,10 +60,17 @@ app.get('/restaurant/:id/det', (req,res) => {
 
 //Get reviews for particular restaurant id
 app.get('/restaurant/:id', (req,res) => {
-    console.log(req.params.id);
+    let reviews = [];
     client.reviews(req.params.id).then ( reviews => {
-        res.send(reviews.jsonBody.reviews);
-    }).catch( e => {
+        return reviews.concat(reviews.jsonBody.reviews);
+    }).then((ress) => {
+        revModel.getReviews(req.params.id).then(
+            resp => {
+                res.send(reviews.concat(resp))
+            }
+        )
+    }
+    ).catch( e => {
         console.log('Error getting reviews');
     })
 });
