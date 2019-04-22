@@ -247,7 +247,8 @@ app.get('/api/user/',getUsers);
 
 searchRest = (req,res) => {
     client.search({
-        location: req.params.id,
+        location: req.query.location,
+        term: req.query.term
     }).then(response => {
         res.send(response.jsonBody.businesses)
     }).catch(e => {
@@ -255,6 +256,6 @@ searchRest = (req,res) => {
     });
 };
 
-app.get('/search/:id',searchRest);
+app.get('/:search',searchRest);
 
 app.listen(process.env.PORT || 4000);
