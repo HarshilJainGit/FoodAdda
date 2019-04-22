@@ -25,6 +25,7 @@ app.use(expressSession({
 
 const restDao = require('./data/daos/restaurant.dao.server');
 const userModel = require('./data/models/user/user.model.server');
+const revModel = require('./data/models/review/review.model.server');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -68,7 +69,22 @@ app.get('/restaurant/:id', (req,res) => {
 });
 
 app.post('/restaurant',(req, res) => {
-    restDao.createRestaurant(req.body).then(
+    const restId = Date.now();
+    const restName = req.body.name;
+    const restPhone = req.body.phone;
+    const restEmail = req.body.email;
+    const restImage = req.body.image_url;
+    const restAddress = req.body.location;
+
+    let newRest = {
+        _id: restId,
+        name: restName,
+        phone: restPhone,
+        email: restEmail,
+        image_url: restImage,
+        location: restAddress
+    };
+    restDao.createRestaurant(newRest).then(
         response => {
             res.send(response);
         }
@@ -115,9 +131,7 @@ function register(req,res) {
     };
     userModel.findUserByUserName(userName).then(
         function (user) {
-            console.log(user);
             if(user === null || user.length === 0) {
-                console.log('User not found with username');
                 return userModel.createUser(newUser);
             }
             else {
@@ -126,29 +140,9 @@ function register(req,res) {
         }
     ).then(function (user) {
         req.session['currentUser'] = user;
-        console.log('Session:'+req.session['currentUser'].userName);
         res.send(user);
     });
 }
-
-
-// function register(req, res) {
-//     var username = req.body.username;
-//     var password = req.body.password;
-//     var newUser = {
-//         username: username,
-//         password: password
-//     };
-//     userModel
-//         .findUserByUsername(username)
-//         .then(function (user) {
-//             if(!user) {
-//                 return userModel
-//                     .createUser(newUser)}})
-//         .then(function (user) {
-//             req.session['currentUser'] = user;
-//             res.send(user);});
-// }
 
 //New user registration
 app.post('/register',register);
@@ -171,7 +165,6 @@ app.get('/users/:userName',(req,res) => {
 
 currentUser = (req, res) => {
     const currentUser = req.session['currentUser'];
-    console.log(currentUser);
     if(currentUser) {
         userModel.findUserById(currentUser._id)
             .then(user => res.send(user))
@@ -268,8 +261,30 @@ searchhh = (req,res) => {
     }).catch(e => {
         console.log(e);
     });
-}
+};
 
 app.get('/blanksearch',searchhh);
+
+addReview = (req,res) => {
+    const currentUserId = req.session['currentUser']._id;
+    const revId = Date.now();
+    const revTime = (new Date()).toString();
+    const revRestId = req.params.id;
+    const revText = req.params.text;
+    let newReview = {
+        _id: revId,
+        userId: currentUserId,
+        restaurantId: revRestId,
+        timestamp: revTime,
+        text: revText
+    };
+    revModel.createReview(newReview).then(
+        response => {
+            res.send(response);
+        }
+    )
+};
+
+app.post('/api/restaurant/:id/review',addReview);
 
 app.listen(process.env.PORT || 4000);
