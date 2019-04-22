@@ -32,7 +32,7 @@ addToFavourites = (userId,restId) =>
     );
 
 getUserFavs = (userId) =>
-    userModel.find(
+    userModel.findOne(
         {_id: userId}, {favRest: 1, _id: 0}
     );
 
