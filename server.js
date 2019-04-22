@@ -205,5 +205,35 @@ getFavs = (req,res) => {
 
 app.get('/api/favrest',getFavs);
 
+delUser = (req,res) => {
+    userModel.deleteUser(req.params.id).then(
+        () => {
+            return userModel.findAllUsers().then(
+                users => res.send(users)
+            )
+        }
+    )
+};
 
-app.listen(process.env.PORT || 5000);
+app.delete('/api/user/:id',delUser);
+
+updUser = (req,res) => {
+   userModel.updateUser(req.params.id,req.body).then(
+       () => {
+           return userModel.findAllUsers().then(
+               users => res.send(users)
+           )
+       }
+   )
+};
+
+app.put('/api/user/:id',updUser);
+
+getUsers = (req,res) => {
+    userModel.findAllUsers().then(
+        users => res.send(users)
+    )
+};
+app.get('/api/user/',getUsers);
+
+app.listen(process.env.PORT || 4000);

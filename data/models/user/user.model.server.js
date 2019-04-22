@@ -36,6 +36,17 @@ getUserFavs = (userId) =>
         {_id: userId}, {favRest: 1, _id: 0}
     );
 
+deleteUser = (userId) =>
+    userModel.findOneAndRemove({
+        _id: userId
+    });
+
+updateUser = (userId,updUser) =>
+    userModel.updateOne(
+        {_id:userId},{$set:updUser}
+    );
+
+
 module.exports = {
     findAllUsers,
     findUserById,
@@ -43,5 +54,7 @@ module.exports = {
     findUserByCredentials,
     createUser,
     addToFavourites,
-    getUserFavs
+    getUserFavs,
+    deleteUser,
+    updateUser
 };
