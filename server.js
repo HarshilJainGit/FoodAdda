@@ -35,12 +35,10 @@ app.get('/home', (req, res) => {
     client.search({
         location: 'san francisco, ca',
     }).then(response => {
-        console.log(response.jsonBody.businesses);
         return rest.concat(response.jsonBody.businesses);
     }).then((ress) => {
       restDao.getRestaurants().then(
           resp => {
-              console.log(rest);
               res.send(ress.concat(resp))
           }
       )
@@ -246,5 +244,17 @@ getUsers = (req,res) => {
     )
 };
 app.get('/api/user/',getUsers);
+
+searchRest = (req,res) => {
+    client.search({
+        location: req.params.id,
+    }).then(response => {
+        res.send(response)
+    }).catch(e => {
+        console.log(e);
+    });
+};
+
+app.get('/search/:id',searchRest);
 
 app.listen(process.env.PORT || 4000);
