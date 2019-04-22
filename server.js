@@ -249,7 +249,7 @@ searchRest = (req,res) => {
     client.search({
         location: req.params.id,
     }).then(response => {
-        res.send(response)
+        res.send(response.jsonBody.businesses)
     }).catch(e => {
         console.log(e);
     });
