@@ -262,7 +262,7 @@ searchhh = (req,res) => {
     client.businessMatch({
         city: 'Boston',
         name: 'Boston Shawarma',
-        address1 : ''
+        address1 : ' '
     }).then(response => {
         res.send(response.jsonBody.businesses)
     }).catch(e => {
