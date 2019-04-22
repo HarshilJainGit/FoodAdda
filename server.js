@@ -35,6 +35,7 @@ app.get('/home', (req, res) => {
     client.search({
         location: 'san francisco, ca',
     }).then(response => {
+        console.log(response.jsonBody.businesses);
         rest.concat(response.jsonBody.businesses);
         console.log(rest)
     }).then(() => {
