@@ -24,10 +24,18 @@ findUserById = (userId) =>
         _id: userId
     });
 
+addToFavourites = (userId,restId) =>
+    userModel.update(
+        {_id: userId}
+        ,{$push: {favRest: {_id: restId}}
+        }
+    );
+
 module.exports = {
     findAllUsers,
     findUserById,
     findUserByUserName,
     findUserByCredentials,
-    createUser
+    createUser,
+    addToFavourites
 };

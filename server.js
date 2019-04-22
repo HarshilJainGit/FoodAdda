@@ -173,4 +173,25 @@ currentUser = (req, res) => {
 
 app.get('/currentUser',currentUser);
 
+favourite = (req,res) => {
+    const currentUser = req.session['currentUser'];
+    if(currentUser) {
+        userModel.findUserById(currentUser._id)
+            .then(user => res.send(user))
+            .then(user => {
+                userModel.addToFavourites(user._id,req.params.id).then(
+                    user => {
+                        res.send(user)
+                    }
+                )
+            })
+    } else {
+        res.sendStatus(403)
+    }
+};
+
+app.put('/api/restaurant/:id/fav',favourite);
+
+
+
 app.listen(process.env.PORT || 5000);
