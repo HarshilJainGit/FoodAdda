@@ -96,13 +96,15 @@ function register(req,res) {
     const firstName = req.body.firstName;
     const email = req.body.email;
     const passWord = req.body.passWord;
+    const role = req.body.role;
     let newUser = {
         _id : userId,
         userName : userName,
         firstName : firstName,
         lastName : lastName,
         email : email,
-        passWord : passWord
+        passWord : passWord,
+        role: role
     };
     userModel.findUserByUserName(userName).then(
         function (user) {
