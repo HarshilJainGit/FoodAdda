@@ -31,11 +31,17 @@ addToFavourites = (userId,restId) =>
         }
     );
 
+getUserFavs = (userId) =>
+    userModel.find(
+        {_id: userId}, {favRest: 1, _id: 0}
+    );
+
 module.exports = {
     findAllUsers,
     findUserById,
     findUserByUserName,
     findUserByCredentials,
     createUser,
-    addToFavourites
+    addToFavourites,
+    getUserFavs
 };

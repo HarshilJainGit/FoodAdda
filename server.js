@@ -191,6 +191,19 @@ favourite = (req,res) => {
 
 app.put('/api/restaurant/:id/fav',favourite);
 
+getFavs = (req,res) => {
+    const currentUser = req.session['currentUser'];
+    if(currentUser) {
+        userModel.getUserFavs(currentUser._id)
+            .then(
+                (favouriteRest) => res.send(favouriteRest)
+            )
+    } else {
+        res.sendStatus(403)
+    }
+};
+
+app.get('/api/favrest',getFavs);
 
 
 app.listen(process.env.PORT || 5000);
