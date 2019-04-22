@@ -7,11 +7,11 @@ createRestaurant = (newRest) =>
 
 getRests = () =>
     restModel.find();
-
-getReviews = (restId) =>
-    restModel.find(
-        {: restId}
-    )
+//
+// getReviews = (restId) =>
+//     restModel.find(
+//         {: restId}
+//     )
 
 module.exports = {
     createRestaurant,
