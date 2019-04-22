@@ -276,7 +276,7 @@ addReview = (req,res) => {
         userId: currentUserId,
         restaurantId: revRestId,
         timestamp: revTime,
-        text: revText
+        reviewText: revText
     };
     revModel.createReview(newReview).then(
         response => {
