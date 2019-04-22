@@ -270,7 +270,7 @@ addReview = (req,res) => {
     const revId = Date.now();
     const revTime = (new Date()).toString();
     const revRestId = req.params.id;
-    const revText = req.params.text;
+    const revText = req.body.text;
     let newReview = {
         _id: revId,
         userId: currentUserId,
