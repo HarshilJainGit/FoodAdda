@@ -5,6 +5,12 @@ createRestaurant = (newRest) =>
         newRestaurant => newRestaurant
     );
 
+getRestaurants = () =>
+    restModel.getRests().then(
+        rests => rests
+    );
+
 module.exports = {
-    createRestaurant
+    createRestaurant,
+    getRestaurants
 };

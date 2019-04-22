@@ -7,7 +7,7 @@ const restaurantSchema =
         image_url : String,
         phone : String,
         email : String,
-        website : String,
+        //website : String,
         address : String,
         rating : Number,
         reviews : [{type: mongoose.Schema.Types.String, ref: 'ReviewModel'}],

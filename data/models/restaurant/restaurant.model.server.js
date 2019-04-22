@@ -5,6 +5,10 @@ const restModel = mongoose.model('RestaurantModel', restaurantSchema);
 createRestaurant = (newRest) =>
     restModel.create(newRest);
 
+getRests = () =>
+    restModel.find();
+
 module.exports = {
-    createRestaurant
+    createRestaurant,
+    getRests
 };
