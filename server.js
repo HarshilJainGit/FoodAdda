@@ -31,17 +31,17 @@ app.use(bodyParser.json());
 
 //Get businesses for location
 app.get('/home', (req, res) => {
-    let rest = {};
+    let rest = [];
     client.search({
         location: 'san francisco, ca',
     }).then(response => {
-        res.concat(response.jsonBody.businesses);
-        console.log(res)
+        rest.concat(response.jsonBody.businesses);
+        console.log(rest)
     }).then(() => {
       restDao.getRestaurants().then(
           resp => {
-              console.log(res);
-              res.send(res.concat(resp))
+              console.log(rest);
+              res.send(rest.concat(resp))
           }
       )
     }).catch(e => {
