@@ -258,4 +258,17 @@ searchRest = (req,res) => {
 
 app.get('/:search',searchRest);
 
+searchhh = (req,res) => {
+    client.businessMatch({
+        city: 'Boston',
+        name: 'Boston Shawarma'
+    }).then(response => {
+        res.send(response.jsonBody.businesses)
+    }).catch(e => {
+        console.log(e);
+    });
+}
+
+app.get('/blanksearch',searchhh);
+
 app.listen(process.env.PORT || 4000);
