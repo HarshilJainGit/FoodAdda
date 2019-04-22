@@ -35,11 +35,13 @@ app.get('/home', (req, res) => {
     client.search({
         location: 'san francisco, ca',
     }).then(response => {
-        rest.concat(response.jsonBody.businesses);
+        res.concat(response.jsonBody.businesses);
+        console.log(res)
     }).then(() => {
       restDao.getRestaurants().then(
           resp => {
-              res.send(rest.concat(resp))
+              console.log(res);
+              res.send(res.concat(resp))
           }
       )
     }).catch(e => {
