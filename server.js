@@ -60,13 +60,13 @@ app.get('/restaurant/:id/det', (req,res) => {
 
 //Get reviews for particular restaurant id
 app.get('/restaurant/:id', (req,res) => {
-    let reviews = [];
+    let reviewsList = [];
     client.reviews(req.params.id).then ( reviews => {
-        return reviews.concat(reviews.jsonBody.reviews);
+        return reviewsList.concat(reviews.jsonBody.reviews);
     }).then((ress) => {
         revModel.getReviews(req.params.id).then(
             resp => {
-                res.send(reviews.concat(resp))
+                res.send(ress.concat(resp))
             }
         )
     }
