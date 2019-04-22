@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 
 //Get businesses for location
 app.get('/home', (req, res) => {
-    const rest = {};
+    let rest = {};
     client.search({
         location: 'san francisco, ca',
     }).then(response => {
