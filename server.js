@@ -132,6 +132,9 @@ function register(req,res) {
     const email = req.body.email;
     const passWord = req.body.passWord;
     const role = req.body.role;
+    const name = firstName + ' '+ lastName;
+    // const image_url = req.body.image_url;
+    const image_url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6dz9gihQ9k_G92EryW9SlmPr5GmPRZxYF_ouPWLaZ4MiBw7fw';
     let newUser = {
         _id : userId,
         userName : userName,
@@ -139,7 +142,9 @@ function register(req,res) {
         lastName : lastName,
         email : email,
         passWord : passWord,
-        role: role
+        role: role,
+        name: name,
+        image_url: image_url
     };
     userModel.findUserByUserName(userName).then(
         function (user) {

@@ -3,9 +3,11 @@ const userSchema =
     mongoose.Schema({
         _id : String,
         userName : String,
+        name: String,
         passWord : String,
         firstName : String,
         lastName : String,
+        image_url: String,
         email : String,
         dob : Date,
         role: { type: String, enum: ['Admin', 'Foodie', 'Restaurant Owner'] },
