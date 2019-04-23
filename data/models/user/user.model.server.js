@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const userSchema = require('./user.schema.server');
 const userModel = mongoose.model('UserModel', userSchema);
+const followModel=require("../follow/follow.model.server");
 
 findAllUsers = () =>
     userModel.find();
@@ -63,6 +64,43 @@ deleteFromFavourites = (userId,restId) =>
         {$pull:{favRest:restId}}
     );
 
+// add to followers
+function addToFollowers(userId,followerId){
+    return userModel.findById(userId)
+        .then(function (user) {
+            user.followers.push(followerId);
+            return user.save();
+        });
+}
+
+// add to following
+function addToFollowing(userId,followingId) {
+    return userModel.findById(userId)
+        .then(function (user) {
+            user.following.push(followingId);
+            return user.save();
+        })
+}
+
+//remove follower
+function removeFollower(userId,followerId) {
+    return userModel.findById(userId)
+        .then(function (user) {
+            var index= user.followers.indexOf(followerId);
+            user.followers.splice(index,1);
+            return user.save();
+        })
+}
+
+function removeFollowing(userId,followingId) {
+    return userModel.findById(userId)
+        .then(function (user) {
+            var index=user.following.indexOf(followingId);
+            user.following.splice(index,1);
+            return user.save();
+        });
+}
+
 module.exports = {
     findAllUsers,
     findUserById,
@@ -75,5 +113,9 @@ module.exports = {
     updateUser,
     deleteFromFavourites,
     createRestList,
-    getUserCreatedRest
+    getUserCreatedRest,
+    addToFollowers,
+    removeFollowing,
+    removeFollower,
+    addToFollowing
 };
