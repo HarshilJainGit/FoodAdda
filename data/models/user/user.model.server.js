@@ -21,33 +21,33 @@ createUser = (newUser) =>
 
 findUserById = (userId) =>
     userModel.findOne({
-        _id: userId
+        id: userId
     });
 
 addToFavourites = (userId,restId) =>
     userModel.update(
-        {_id: userId}
-        ,{$push: {favRest: {_id: restId}}
+        {id: userId}
+        ,{$push: {favRest: {id: restId}}
         }
     );
 
 getUserFavs = (userId) =>
     userModel.findOne(
-        {_id: userId}, {favRest: 1, _id: 0}
+        {id: userId}, {favRest: 1, id: 0}
     );
 
 deleteUser = (userId) =>
     userModel.findOneAndRemove({
-        _id: userId
+        id: userId
     });
 
 updateUser = (userId,updUser) =>
     userModel.updateOne(
-        {_id:userId},{$set:updUser}
+        {id:userId},{$set:updUser}
     );
 
 deleteFromFavourites = (userId,restId) =>
-    userModel.update({_id:userId},
+    userModel.update({id:userId},
         {$pull:{favRest:restId}}
     );
 
