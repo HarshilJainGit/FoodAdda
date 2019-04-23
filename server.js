@@ -61,8 +61,8 @@ app.get('/restaurant/:id/det', (req,res) => {
         )
     }).catch(e => {
         restDao.getRestaurantById(req.params.id).then(
-            resp => {
-                res.send(resp)
+            resty => {
+                res.send(resty)
             }
         );
         console.log(e);
