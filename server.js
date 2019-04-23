@@ -89,7 +89,7 @@ app.post('/restaurant',(req, res) => {
     const restAddress = req.body.location;
 
     let newRest = {
-        _id: restId,
+        id: restId,
         name: restName,
         phone: restPhone,
         email: restEmail,
@@ -136,7 +136,7 @@ function register(req,res) {
     // const image_url = req.body.image_url;
     const image_url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6dz9gihQ9k_G92EryW9SlmPr5GmPRZxYF_ouPWLaZ4MiBw7fw';
     let newUser = {
-        _id : userId,
+        id : userId,
         userName : userName,
         firstName : firstName,
         lastName : lastName,
@@ -183,7 +183,7 @@ app.get('/users/:userName',(req,res) => {
 currentUser = (req, res) => {
     const currentUser = req.session['currentUser'];
     if(currentUser) {
-        userModel.findUserById(currentUser._id)
+        userModel.findUserById(currentUser.id)
             .then(user => res.send(user))
     } else {
         res.sendStatus(403)
@@ -195,9 +195,9 @@ app.get('/currentUser',currentUser);
 favourite = (req,res) => {
     const currentUser = req.session['currentUser'];
     if(currentUser) {
-        userModel.findUserById(currentUser._id)
+        userModel.findUserById(currentUser.id)
             .then((user) => {
-                return userModel.addToFavourites(user._id,req.params.id).then(
+                return userModel.addToFavourites(user.id,req.params.id).then(
                     user1 => {
                         res.send(user1)
                     }
@@ -213,7 +213,7 @@ app.put('/api/restaurant/:id/fav',favourite);
 getFavs = (req,res) => {
     const currentUser = req.session['currentUser'];
     if(currentUser) {
-        userModel.getUserFavs(currentUser._id)
+        userModel.getUserFavs(currentUser.id)
             .then(
                 (favouriteRest) => res.send(favouriteRest)
             )
@@ -275,7 +275,7 @@ addReview = (req,res) => {
     const revRestId = req.params.id;
     const revText = req.body.text;
     let newReview = {
-        _id: revId,
+        id: revId,
         user: currentUser,
         restaurantId: revRestId,
         time_created: revTime,
@@ -307,9 +307,9 @@ app.get('/blanksearch',searchhh);
 deleteFromFav = (req,res) => {
     const currentUser = req.session['currentUser'];
     if (currentUser) {
-        userModel.findUserById(currentUser._id)
+        userModel.findUserById(currentUser.id)
             .then((user) => {
-                return userModel.deleteFromFavourites(user._id, req.params.id).then(
+                return userModel.deleteFromFavourites(user.id, req.params.id).then(
                     user1 => {
                         res.send(user1)
                     }
