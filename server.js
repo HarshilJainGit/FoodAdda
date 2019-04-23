@@ -391,7 +391,7 @@ app.get('/api/restaurant/recent',getRecentRests);
 // app.get('/api/restaurant/:id',getRestById);
 
 getReviewsByUser = (req,res) => {
-    revModel.getReviewsByUser().then(
+    revModel.getReviewsByUser(req.params.id).then(
         resp => {
             res.send(resp);
         }
