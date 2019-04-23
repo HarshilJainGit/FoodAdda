@@ -426,12 +426,6 @@ app.get('/api/user/createdrest',getRestCreated);
 //Followers
 const followModel=require('./data/models/follow/follow.model.server');
 
-app.get    ("/api/Follower/:id",getFollowers);
-app.put    ("/api/createFollow/:follower/:following",follow);
-app.delete ("/api/unfollow/:follower/:following",unfollow);
-app.get    ("/api/getFollowing/:id",getFollowing);
-app.get    ("/api/getallfollow",getAllFollow);
-app.delete ("/api/deletefollow/:id",deleteFollow);
 
 //follow
 
@@ -506,5 +500,13 @@ getFollowing = (req,res) => {
             res.json(response);
         });
 };
+
+
+app.get    ("/api/Follower/:id",getFollowers);
+app.put    ("/api/createFollow/:follower/:following",follow);
+app.delete ("/api/unfollow/:follower/:following",unfollow);
+app.get    ("/api/getFollowing/:id",getFollowing);
+app.get    ("/api/getallfollow",getAllFollow);
+app.delete ("/api/deletefollow/:id",deleteFollow);
 
 app.listen(process.env.PORT || 4000);
