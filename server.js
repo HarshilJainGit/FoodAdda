@@ -269,14 +269,14 @@ searchRest = (req,res) => {
 app.get('/:search',searchRest);
 
 addReview = (req,res) => {
-    const currentUserId = req.session['currentUser']._id;
+    const currentUser = req.session['currentUser'];
     const revId = Date.now();
     const revTime = (new Date()).toString();
     const revRestId = req.params.id;
     const revText = req.body.text;
     let newReview = {
         _id: revId,
-        userId: currentUserId,
+        user: currentUser,
         restaurantId: revRestId,
         time_created: revTime,
         text: revText
