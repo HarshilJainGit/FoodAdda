@@ -8,7 +8,11 @@ createRestaurant = (newRest) =>
 getRests = () =>
     restModel.find();
 
+getRestaurantById = (restId) =>
+    restModel.findById({id:restId});
+
 module.exports = {
     createRestaurant,
+    getRestaurantById,
     getRests
 };

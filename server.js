@@ -50,12 +50,23 @@ app.get('/home', (req, res) => {
 
 //Get restaurant details
 app.get('/restaurant/:id/det', (req,res) => {
-    console.log(req.params.id);
-    client.business(req.params.id).then ( business => {
-        res.send(business.jsonBody);
-    }).catch( e => {
-        console.log('Error getting business details');
-    })
+    let rest = [];
+    client.business(req.params.id).then (response => {
+        return rest.concat(response.jsonBody);
+    }).then((ress) => {
+        restDao.getRestaurantById(req.params.id).then(
+            resp => {
+                res.send(ress.concat(resp))
+            }
+        )
+    }).catch(e => {
+        restDao.getRestaurantById(req.params.id).then(
+            resp => {
+                res.send(resp)
+            }
+        );
+        console.log(e);
+    });
 });
 
 //Get reviews for particular restaurant id
