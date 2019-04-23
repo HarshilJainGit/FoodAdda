@@ -3,7 +3,7 @@ const reviewSchema =
     mongoose.Schema({
         id : String,
         restaurantId: {type: mongoose.Schema.Types.String, ref: 'RestaurantModel'},
-        user : {type: mongoose.Schema.Types.Number, ref: 'UserModel'},
+        user : {type: mongoose.Schema.Types.String, ref: 'UserModel'},
         time_created : String,
         text : String
     }, {collection: 'review'});
