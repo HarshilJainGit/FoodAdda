@@ -31,6 +31,13 @@ addToFavourites = (userId,restId) =>
         }
     );
 
+createRestList = (userId,restId) =>
+    userModel.update(
+        {_id: userId}
+        ,{$push: {createdRest:restId}
+        }
+    );
+
 getUserFavs = (userId) =>
     userModel.findOne(
         {_id: userId}, {favRest: 1, _id: 0}
@@ -61,5 +68,6 @@ module.exports = {
     getUserFavs,
     deleteUser,
     updateUser,
-    deleteFromFavourites
+    deleteFromFavourites,
+    createRestList
 };

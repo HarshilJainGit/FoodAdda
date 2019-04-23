@@ -14,7 +14,7 @@ const userSchema =
         role: { type: String, enum: ['Admin', 'Foodie', 'Restaurant Owner'] },
         city : String,
         favRest : [{type: mongoose.Schema.Types.String, ref: 'RestaurantModel'}],
-        lastViewed : [{type: mongoose.Schema.Types.String, ref: 'RestaurantModel'}],
+        createdRest : [{type: mongoose.Schema.Types.String, ref: 'RestaurantModel'}],
         reviews : {type: mongoose.Schema.Types.String, ref: 'ReviewModel'}
     }, {collection: 'user'});
 module.exports = userSchema;

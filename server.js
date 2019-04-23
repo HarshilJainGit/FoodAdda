@@ -96,7 +96,8 @@ app.get('/restaurant/:id', (req,res) => {
     })
 });
 
-app.post('/restaurant',(req, res) => {
+createRest = (req,res) => {
+    const currentUser = req.session['currentUser'];
     const restId = Date.now();
     const restName = req.body.name;
     const restPhone = req.body.phone;
@@ -114,10 +115,17 @@ app.post('/restaurant',(req, res) => {
     };
     restDao.createRestaurant(newRest).then(
         response => {
-            res.send(response);
+            return response;
         }
-    )
-});
+    ).then(() => {
+        userModel.createRestList(currentUser._id, restId).then(
+            resp => {
+                res.send(resp)
+            })
+    });
+};
+
+app.post('/restaurant',createRest);
 
 function login(req,res) {
     const userName = req.body.userName;
