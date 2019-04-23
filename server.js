@@ -338,4 +338,14 @@ deleteFromFav = (req,res) => {
 
 app.put('/api/restaurant/:id/delfav',deleteFromFav);
 
+getUserById = (req,res) => {
+    userModel.findUserById(req.params.id).then(
+        user => {
+            res.send(user);
+        }
+    )
+};
+
+app.get('/api/profile/:id',getUserById);
+
 app.listen(process.env.PORT || 4000);
