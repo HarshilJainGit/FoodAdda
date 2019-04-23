@@ -315,6 +315,6 @@ deleteFromFav = (req,res) => {
     }
 };
 
-app.put('/api/restaurant/:id/fav',deleteFromFav);
+app.put('/api/restaurant/:id/delfav',deleteFromFav);
 
 app.listen(process.env.PORT || 4000);
