@@ -43,6 +43,11 @@ getUserFavs = (userId) =>
         {_id: userId}, {favRest: 1, _id: 0}
     );
 
+getUserCreatedRest = (userId) =>
+    userModel.findOne(
+        {_id:userId},{createdRest:1, _id:0}
+    );
+
 deleteUser = (userId) =>
     userModel.findOneAndRemove({
         _id: userId
@@ -69,5 +74,6 @@ module.exports = {
     deleteUser,
     updateUser,
     deleteFromFavourites,
-    createRestList
+    createRestList,
+    getUserCreatedRest
 };

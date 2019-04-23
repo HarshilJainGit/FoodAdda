@@ -408,4 +408,18 @@ getReviewsByUser = (req,res) => {
 
 app.get('/api/user/:id/reviews',getReviewsByUser);
 
+getRestCreated = (req,res) => {
+    const currentUser = req.session['currentUser'];
+    if(currentUser) {
+        userModel.getUserCreatedRest(currentUser._id)
+            .then(
+                (createdRest) => res.send(createdRest)
+            )
+    } else {
+        res.sendStatus(403)
+    }
+};
+
+app.get('/api/user/createdrest',getRestCreated);
+
 app.listen(process.env.PORT || 4000);
