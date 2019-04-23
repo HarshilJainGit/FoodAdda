@@ -12,5 +12,6 @@ getReviews = (restId) =>
 
 module.exports = {
     createReview,
-    getReviews
+    getReviews,
+
 };

@@ -61,7 +61,6 @@ app.get('/restaurant/:id/det', (req,res) => {
 //Get reviews for particular restaurant id
 app.get('/restaurant/:id', (req,res) => {
     let reviewsList = [];
-
     client.reviews(req.params.id).then ( reviews => {
         return reviewsList.concat(reviews.jsonBody.reviews);
     }).then((ress) => {
@@ -71,13 +70,13 @@ app.get('/restaurant/:id', (req,res) => {
             }
         )
     }
-    ).catch( () => {
+    ).catch(() => {
         revModel.getReviews(req.params.id).then(
             resp => {
                 res.send(resp)
             }
-        )
-        console.log('Error getting reviews');
+        );
+        console.log('No reviews on Yelp');
     })
 });
 
@@ -286,9 +285,6 @@ addReview = (req,res) => {
 
 app.post('/api/restaurant/:id/review',addReview);
 
-
-
-
 searchhh = (req,res) => {
     client.businessMatch({
         city: 'Boston',
@@ -303,5 +299,22 @@ searchhh = (req,res) => {
 
 app.get('/blanksearch',searchhh);
 
+deleteFromFav = (req,res) => {
+    const currentUser = req.session['currentUser'];
+    if (currentUser) {
+        userModel.findUserById(currentUser._id)
+            .then((user) => {
+                return userModel.deleteFromFavourites(user._id, req.params.id).then(
+                    user1 => {
+                        res.send(user1)
+                    }
+                )
+            })
+    } else {
+        res.sendStatus(403)
+    }
+};
+
+app.delete('/api/restaurant/:id/fav',deleteFromFav);
 
 app.listen(process.env.PORT || 4000);
