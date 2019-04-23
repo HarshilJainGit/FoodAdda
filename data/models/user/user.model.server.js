@@ -27,7 +27,7 @@ findUserById = (userId) =>
 addToFavourites = (userId,restId) =>
     userModel.update(
         {_id: userId}
-        ,{$push: {favRest: {id: restId}}
+        ,{$push: {favRest:restId}
         }
     );
 
