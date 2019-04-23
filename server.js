@@ -147,7 +147,7 @@ function register(req,res) {
     // const image_url = req.body.image_url;
     const image_url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6dz9gihQ9k_G92EryW9SlmPr5GmPRZxYF_ouPWLaZ4MiBw7fw';
     let newUser = {
-        id : userId,
+        _id : userId,
         userName : userName,
         firstName : firstName,
         lastName : lastName,
@@ -194,7 +194,7 @@ app.get('/users/:userName',(req,res) => {
 currentUser = (req, res) => {
     const currentUser = req.session['currentUser'];
     if(currentUser) {
-        userModel.findUserById(currentUser.id)
+        userModel.findUserById(currentUser._id)
             .then(user => res.send(user))
     } else {
         res.sendStatus(403)
@@ -206,9 +206,9 @@ app.get('/currentUser',currentUser);
 favourite = (req,res) => {
     const currentUser = req.session['currentUser'];
     if(currentUser) {
-        userModel.findUserById(currentUser.id)
+        userModel.findUserById(currentUser._id)
             .then((user) => {
-                return userModel.addToFavourites(user.id,req.params.id).then(
+                return userModel.addToFavourites(user._id,req.params.id).then(
                     user1 => {
                         res.send(user1)
                     }
@@ -224,7 +224,7 @@ app.put('/api/restaurant/:id/fav',favourite);
 getFavs = (req,res) => {
     const currentUser = req.session['currentUser'];
     if(currentUser) {
-        userModel.getUserFavs(currentUser.id)
+        userModel.getUserFavs(currentUser._id)
             .then(
                 (favouriteRest) => res.send(favouriteRest)
             )
@@ -318,9 +318,9 @@ app.get('/blanksearch',searchhh);
 deleteFromFav = (req,res) => {
     const currentUser = req.session['currentUser'];
     if (currentUser) {
-        userModel.findUserById(currentUser.id)
+        userModel.findUserById(currentUser._id)
             .then((user) => {
-                return userModel.deleteFromFavourites(user.id, req.params.id).then(
+                return userModel.deleteFromFavourites(user._id, req.params.id).then(
                     user1 => {
                         res.send(user1)
                     }
