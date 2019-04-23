@@ -427,7 +427,7 @@ app.get('/api/user/createdrest',getRestCreated);
 const followModel=require('./data/models/follow/follow.model.server');
 
 app.get    ("/api/Follower/:id",getFollowers);
-app.put    ("/api/createFollow/:follower/:following",follow);x
+app.put    ("/api/createFollow/:follower/:following",follow);
 app.delete ("/api/unfollow/:follower/:following",unfollow);
 app.get    ("/api/getFollowing/:id",getFollowing);
 app.get    ("/api/getallfollow",getAllFollow);
