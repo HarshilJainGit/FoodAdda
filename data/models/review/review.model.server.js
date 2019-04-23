@@ -8,7 +8,7 @@ createReview = (newReview) =>
 getReviews = (restId) =>
     reviewModel.find({
         restaurantId:restId
-    });
+    }).populate('user');
 
 module.exports = {
     createReview,
