@@ -214,6 +214,7 @@ favourite = (req,res) => {
         userModel.findUserById(currentUser._id)
             .then((user) => {
                 console.log('User found:' + user.name);
+                console.log(req.params.id);
                 return userModel.addToFavourites(user._id,req.params.id).then(
                     user1 => {
                         console.log('Fav added:'+user1.name);
