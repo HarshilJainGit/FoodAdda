@@ -4,7 +4,7 @@ const reviewSchema =
         _id : String,
         restaurantId: {type: mongoose.Schema.Types.String, ref: 'RestaurantModel'},
         userId : {type: mongoose.Schema.Types.Number, ref: 'UserModel'},
-        timestamp : String,
-        reviewText : String
+        time_created : String,
+        text : String
     }, {collection: 'review'});
 module.exports = reviewSchema;
