@@ -482,7 +482,7 @@ unfollow = (req,res) => {
     const following=req.params.following;
     console.log(follower);
     console.log(following);
-    followModel.deleteFollow(following,follower)
+    followModel.deleteFollow(follower,following)
         .then(function (response) {
                 console.log(response);
                 res.sendStatus(200);
