@@ -15,8 +15,14 @@ getRestaurantById = (restId) =>
         rest => rest
     );
 
+getRecentRests = () =>
+    restModel.getRecentRests().then(
+        rests => rests
+    );
+
 module.exports = {
     createRestaurant,
     getRestaurants,
-    getRestaurantById
+    getRestaurantById,
+    getRecentRests
 };

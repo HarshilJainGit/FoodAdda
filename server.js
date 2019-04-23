@@ -351,4 +351,14 @@ getUserById = (req,res) => {
 
 app.get('/api/profile/:id',getUserById);
 
+getRecentRests = (req,res) => {
+    restDao.getRecentRests().then(
+        rests => {
+            res.send(rests);
+        }
+    )
+};
+
+app.get('/api/restaurant/recent',getRecentRests);
+
 app.listen(process.env.PORT || 4000);

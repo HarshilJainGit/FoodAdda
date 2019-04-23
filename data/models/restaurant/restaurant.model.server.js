@@ -11,8 +11,12 @@ getRests = () =>
 getRestaurantById = (restId) =>
     restModel.findOne({id:restId});
 
+getRecentRests = () =>
+    restModel.find().sort({id:-1});
+
 module.exports = {
     createRestaurant,
     getRestaurantById,
-    getRests
+    getRests,
+    getRecentRests
 };
