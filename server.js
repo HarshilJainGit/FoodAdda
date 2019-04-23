@@ -146,6 +146,7 @@ function register(req,res) {
     const lastName = req.body.lastName;
     const firstName = req.body.firstName;
     const email = req.body.email;
+    const phone = req.body.phone;
     const passWord = req.body.passWord;
     const role = req.body.role;
     const name = firstName + ' '+ lastName;
@@ -160,6 +161,7 @@ function register(req,res) {
         passWord : passWord,
         role: role,
         name: name,
+        phone: phone,
         image_url: image_url
     };
     userModel.findUserByUserName(userName).then(
@@ -360,5 +362,42 @@ getRecentRests = (req,res) => {
 };
 
 app.get('/api/restaurant/recent',getRecentRests);
+
+// getRestById = (req,res) => {
+//     client.business(req.params.id).then (response => {
+//         return rest.concat(response.jsonBody);
+//     }).then((ress) => {
+//         restDao.getRestaurantById(req.params.id).then(
+//             resp => {
+//                 if(resp === null) {
+//                     res.send(ress[0])
+//                 }
+//                 else {
+//                     res.send(ress.concat(resp))
+//                 }
+//             }
+//         )
+//     }).catch(e => {
+//         restDao.getRestaurantById(req.params.id).then(
+//             resty => {
+//                 res.send(resty)
+//             }
+//         );
+//         console.log(e);
+//     });
+// };
+//
+//
+// app.get('/api/restaurant/:id',getRestById);
+
+getReviewsByUser = () => {
+    revModel.getReviewsByUser().then(
+        resp => {
+            res.send(resp);
+        }
+    )
+};
+
+app.get('/api/user/:id/reviews',getReviewsByUser);
 
 app.listen(process.env.PORT || 4000);

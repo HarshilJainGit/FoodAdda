@@ -10,8 +10,13 @@ getReviews = (restId) =>
         restaurantId:restId
     }).populate('user');
 
+getReviewsByUser = (userId) =>
+    reviewModel.find().populate({
+        path:'user',match:{_id:userId}
+    });
+
 module.exports = {
     createReview,
     getReviews,
-
+    getReviewsByUser
 };

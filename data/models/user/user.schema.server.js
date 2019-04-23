@@ -10,6 +10,7 @@ const userSchema =
         image_url: String,
         email : String,
         dob : Date,
+        phone: String,
         role: { type: String, enum: ['Admin', 'Foodie', 'Restaurant Owner'] },
         city : String,
         favRest : [{type: mongoose.Schema.Types.String, ref: 'RestaurantModel'}],
