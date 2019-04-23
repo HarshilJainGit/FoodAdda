@@ -41,7 +41,6 @@ function deleteFollows(followId) {
 
 // delete a follow
 function deleteFollow(follower,following) {
-
     return followModel.findOne({follower:follower, following:following})
         .then(function (follow) {
             console.log(follow);

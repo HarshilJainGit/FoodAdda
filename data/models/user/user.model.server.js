@@ -101,6 +101,15 @@ function removeFollowing(userId,followingId) {
         });
 }
 
+// add to followers
+function addToFollowers(userId,followerId){
+    return userModel.findById(userId)
+        .then(function (user) {
+            user.followers.push(followerId);
+            return user.save();
+        });
+}
+
 module.exports = {
     findAllUsers,
     findUserById,
