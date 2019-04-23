@@ -48,7 +48,7 @@ updateUser = (userId,updUser) =>
 
 deleteFromFavourites = (userId,restId) =>
     userModel.update({_id:userId},
-        {$pull:{favRest:[restId]}}
+        {$pull:{favRest:{_id:restId}}}
     );
 
 module.exports = {
