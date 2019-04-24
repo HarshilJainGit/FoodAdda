@@ -361,6 +361,7 @@ getUserById = (req,res) => {
 app.get('/api/profile/:id',getUserById);
 
 getRecentRests = (req,res) => {
+    console.log('In recent rests');
     restDao.getRecentRests().then(
         rests => {
             console.log('Recent: '+rests);
