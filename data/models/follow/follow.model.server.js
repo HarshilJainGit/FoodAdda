@@ -2,28 +2,17 @@ const mongoose=require("mongoose");
 const followSchema=require("./follow.schema.server");
 const followModel = mongoose.model("FollowModel",followSchema);
 
-//
-// followModel.createFollow=createFollow;
-// followModel.deleteFollow=deleteFollow;
-// followModel.findAllFollowing=findAllFollowing;
-// followModel.findAllFollowers=findAllFollowers;
-// followModel.deleteFollowing=deleteFollowing;
-// followModel.getAllFollow=getAllFollow;
-// followModel.deleteFollows=deleteFollows;
-// module.exports = followModel;
-
-
 //crud operations
 
-function getAllFollow() {
+getAllFollow = () => {
     return followModel.find()
         .populate('follower')
         .populate('following')
         .exec();
-}
+};
 
 //create Follow
-function createFollow(newFollow) {
+createFollow = (newFollow) => {
     return followModel.findOne({follower:newFollow.follower,following:newFollow.following})
         .then(function (response) {
             //console.log(response);
@@ -31,12 +20,12 @@ function createFollow(newFollow) {
                 followModel.create(newFollow);
             }
         });
-}
+};
 
 //delete follows
-function deleteFollows(followId) {
+deleteFollows = (followId) => {
     return followModel.remove({_id:followId});
-}
+};
 
 
 // delete a follow

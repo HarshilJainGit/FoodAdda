@@ -253,7 +253,7 @@ app.get('/api/favrest',getFavs);
 delUser = (req,res) => {
     userModel.deleteUser(req.params.id).then(
         () => {
-            return followModel.deleteFollowing.then(
+            return followModel.deleteFollowing(req.params.id).then(
                 status => {
                     return userModel.findAllUsers().then(
                         users => res.send(users)
