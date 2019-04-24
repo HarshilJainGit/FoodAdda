@@ -30,23 +30,38 @@ const revModel = require('./data/models/review/review.model.server');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// //Get businesses for location
+// app.get('/home', (req, res) => {
+//     let rest = [];
+//     client.search({
+//         location: 'san francisco, ca',
+//         sort_by: 'rating'
+//     }).then(response => {
+//         return rest.concat(response.jsonBody.businesses);
+//     }).then((ress) => {
+//       restDao.getRestaurants().then(
+//           resp => {
+//               res.send(ress.concat(resp))
+//           }
+//       )
+//     }).catch(e => {
+//         console.log(e);
+//     });
+// });
+
 //Get businesses for location
 app.get('/home', (req, res) => {
     let rest = [];
     client.search({
         location: 'san francisco, ca',
+        sort_by: 'rating'
     }).then(response => {
-        return rest.concat(response.jsonBody.businesses);
-    }).then((ress) => {
-      restDao.getRestaurants().then(
-          resp => {
-              res.send(ress.concat(resp))
-          }
-      )
+        res.send(response);
     }).catch(e => {
         console.log(e);
     });
 });
+
 
 //Get restaurant details
 app.get('/restaurant/:id/det', (req,res) => {
