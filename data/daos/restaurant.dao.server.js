@@ -25,10 +25,16 @@ updateRest = (restId,newRest) =>
         status => status
     );
 
+deleteRest = (restId) =>
+    restModel.deleteRest(restId).then(
+        status => status
+    );
+
 module.exports = {
     createRestaurant,
     getRestaurants,
     getRestaurantById,
     getRecentRests,
-    updateRest
+    updateRest,
+    deleteRest
 };

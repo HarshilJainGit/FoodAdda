@@ -19,10 +19,14 @@ updateRest = (restId,newRest) =>
         ,{$set:newRest}
     );
 
+deleteRest = (restId) =>
+    restModel.deleteOne({id:restId});
+
 module.exports = {
     createRestaurant,
     getRestaurantById,
     getRests,
     getRecentRests,
-    updateRest
+    updateRest,
+    deleteRest
 };
