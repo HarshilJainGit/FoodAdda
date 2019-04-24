@@ -35,6 +35,7 @@ app.get('/api/home', (req, res) => {
     client.search({
         location: 'new york',
         categories: 'Food',
+        term: 'food',
         sort_by: 'rating'
     }).then(response => {
         res.send(response.jsonBody.businesses);
