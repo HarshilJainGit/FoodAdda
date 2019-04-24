@@ -78,7 +78,7 @@ function findAllFollowing(userId) {
 
 //delete following when user deletes profile
 function deleteFollowing(userId) {
-    followModel.deleteMany({}).populate({
+    return followModel.deleteMany({}).populate({
         path:'follower',match:{_id:userId}
     }).then(
         stats => {
