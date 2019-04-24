@@ -33,7 +33,7 @@ const revModel = require('./data/models/review/review.model.server');
 //Get businesses for location
 app.get('/api/home', (req, res) => {
     client.search({
-        location: 'san francisco, ca',
+        location: 'united states',
         categories: 'Food',
         sort_by: 'rating'
     }).then(response => {
