@@ -2,13 +2,13 @@ const expressSession = require('express-session');
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
-require('./data/db')();
-const yelp = require('yelp-fusion');
 
+const yelp = require('yelp-fusion');
 const client = yelp.client('ss4-t75R3qifJTmT5KQT_Wg46lOf_kEMgaX-5ivOLIbO-hHhibMS7SDyAib7Ql5ZL9hQPVnJDup0hVxS9JEy6ND-wmFcid3Hq_se7FMnz06TCwaPCo83iEMLaxW6XHYx');
+
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin",
-        "http://localhost:4200");
+        "https://foodadda-webdevproj.herokuapp.com/");
     res.header("Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods",
@@ -21,18 +21,16 @@ app.use(expressSession({
     resave: false, saveUninitialized: true,
     secret: 'EverythingIsPlanned'
 }));
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+require('./data/db')();
 
 const restDao = require('./data/daos/restaurant.dao.server');
 const userModel = require('./data/models/user/user.model.server');
 const revModel = require('./data/models/review/review.model.server');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
 //Get businesses for location
-app.get('/home', (req, res) => {
-    let rest = [];
+app.get('/api/home', (req, res) => {
     client.search({
         location: 'san francisco, ca',
         categories: 'Food',
@@ -44,9 +42,8 @@ app.get('/home', (req, res) => {
     });
 });
 
-
 //Get restaurant details
-app.get('/restaurant/:id/det', (req,res) => {
+app.get('/api/restaurant/:id/det', (req,res) => {
     let rest = [];
     client.business(req.params.id).then (response => {
         return rest.concat(response.jsonBody);
@@ -72,7 +69,7 @@ app.get('/restaurant/:id/det', (req,res) => {
 });
 
 //Get reviews for particular restaurant id
-app.get('/restaurant/:id', (req,res) => {
+app.get('/api/restaurant/:id', (req,res) => {
     let reviewsList = [];
     client.reviews(req.params.id).then ( reviews => {
         return reviewsList.concat(reviews.jsonBody.reviews);
@@ -122,7 +119,7 @@ createRest = (req,res) => {
     });
 };
 
-app.post('/restaurant',createRest);
+app.post('/api/restaurant',createRest);
 
 function login(req,res) {
     const userName = req.body.userName;
@@ -140,10 +137,10 @@ function login(req,res) {
 }
 
 //User Login
-app.post('/login',login);
+app.post('/api/login',login);
 
 //User Profile
-app.get('/profile');
+app.get('/api/profile');
 
 function register(req,res) {
     const userId = Date.now();
@@ -185,7 +182,7 @@ function register(req,res) {
 }
 
 //New user registration
-app.post('/register',register);
+app.post('/api/register',register);
 
 function logout(req,res) {
     req.session.destroy();
@@ -193,9 +190,9 @@ function logout(req,res) {
 }
 
 //Logout User
-app.post('/logout',logout);
+app.post('/api/logout',logout);
 
-app.get('/users/:userName',(req,res) => {
+app.get('/api/users/:userName',(req,res) => {
     userModel.findUserByUserName(req.params.userName).then(
         users => {
             res.send(users)
@@ -213,18 +210,15 @@ currentUser = (req, res) => {
     }
 };
 
-app.get('/currentUser',currentUser);
+app.get('/api/currentUser',currentUser);
 
 favourite = (req,res) => {
     const currentUser = req.session['currentUser'];
     if(currentUser) {
         userModel.findUserById(currentUser._id)
             .then((user) => {
-                console.log('User found:' + user.name);
-                console.log(req.params.id);
                 return userModel.addToFavourites(user._id,req.params.id).then(
                     user1 => {
-                        console.log('Fav added:'+user1.name);
                         res.send(user1)
                     }
                 )
@@ -300,7 +294,7 @@ searchRest = (req,res) => {
     });
 };
 
-app.get('/:search',searchRest);
+app.get('/api/:search',searchRest);
 
 addReview = (req,res) => {
     const currentUser = req.session['currentUser'];
@@ -336,7 +330,7 @@ searchhh = (req,res) => {
     });
 };
 
-app.get('/blanksearch',searchhh);
+app.get('/api/blanksearch',searchhh);
 
 deleteFromFav = (req,res) => {
     const currentUser = req.session['currentUser'];
@@ -376,33 +370,6 @@ getRecentRests = (req,res) => {
 
 app.get('/api/restaurant/recent',getRecentRests);
 
-// getRestById = (req,res) => {
-//     client.business(req.params.id).then (response => {
-//         return rest.concat(response.jsonBody);
-//     }).then((ress) => {
-//         restDao.getRestaurantById(req.params.id).then(
-//             resp => {
-//                 if(resp === null) {
-//                     res.send(ress[0])
-//                 }
-//                 else {
-//                     res.send(ress.concat(resp))
-//                 }
-//             }
-//         )
-//     }).catch(e => {
-//         restDao.getRestaurantById(req.params.id).then(
-//             resty => {
-//                 res.send(resty)
-//             }
-//         );
-//         console.log(e);
-//     });
-// };
-//
-//
-// app.get('/api/restaurant/:id',getRestById);
-
 getReviewsByUser = (req,res) => {
     revModel.getReviewsByUser(req.params.id).then(
         resp => {
@@ -431,37 +398,29 @@ app.get('/api/user/createdrest',getRestCreated);
 //Followers
 const followModel=require('./data/models/follow/follow.model.server');
 
-
-//follow
-
 getFollowers = (req,res) => {
     const userId=req.params.id;
-    followModel.findAllFollowers(userId)
-        .then(function (response) {
-            //console.log("________server____getFollowers");
-            //console.log(response);
+    followModel.findAllFollowers(userId).then(
+        function (response) {
             res.json(response);
         });
 };
 
 getAllFollow = (req,res) => {
-    followModel.getAllFollow()
-        .then(function (response) {
-            //console.log(response);
+    followModel.getAllFollow().then(
+        function (response) {
             res.json(response);
         });
 };
 
-//add to followers when someone follows a user
 follow = (req,res) => {
     const follower = req.params.follower;
     const following = req.params.following;
     const newFollow = new Object();
     newFollow.follower = follower;
     newFollow.following = following;
-    //console.log(newFollow);
-    followModel.createFollow(newFollow)
-        .then(function (response) {
+    followModel.createFollow(newFollow).then(
+        function (response) {
                 res.sendStatus(200)
             },
             function (err) {
@@ -469,7 +428,6 @@ follow = (req,res) => {
             });
 };
 
-//delete follow
 deleteFollow = (req,res) => {
     const followId=req.params.id;
     followModel.deleteFollows(followId)
@@ -481,15 +439,11 @@ deleteFollow = (req,res) => {
             });
 };
 
-//remove user from following
 unfollow = (req,res) => {
     const follower=req.params.follower;
     const following=req.params.following;
-    console.log(follower);
-    console.log(following);
     followModel.deleteFollow(follower,following)
         .then(function (response) {
-                console.log(response);
                 res.sendStatus(200);
             },
             function (err) {
@@ -497,7 +451,6 @@ unfollow = (req,res) => {
             });
 };
 
-//get all following give
 getFollowing = (req,res) => {
     const userId=req.params.id;
     followModel.findAllFollowing(userId)
@@ -507,7 +460,7 @@ getFollowing = (req,res) => {
 };
 
 
-app.get    ("/api/Follower/:id",getFollowers);
+app.get    ("/api/followers/:id",getFollowers);
 app.put    ("/api/createFollow/:follower/:following",follow);
 app.delete ("/api/unfollow/:follower/:following",unfollow);
 app.get    ("/api/getFollowing/:id",getFollowing);
@@ -533,7 +486,7 @@ deleteRest = (req,res) => {
 
         }
     )
-}
+};
 
 app.delete('/api/restaurant/:id/del',deleteRest);
 

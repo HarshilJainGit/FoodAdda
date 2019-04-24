@@ -5,7 +5,7 @@ module.exports = function () {
     let connectionString =
         'mongodb://localhost/';
     connectionString += databaseName;
-    mongoose.connect(herokuString, { useNewUrlParser: true }).then(
+    mongoose.connect(herokuString, {useNewUrlParser: true}).then(
         () => console.log('Connected')
     ).catch(
         () => console.log('Unable to connect')

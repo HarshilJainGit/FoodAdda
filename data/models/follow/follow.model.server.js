@@ -1,9 +1,8 @@
-const mongoose=require("mongoose");
-const followSchema=require("./follow.schema.server");
-const followModel = mongoose.model("FollowModel",followSchema);
+const mongoose = require("mongoose");
+const followSchema = require("./follow.schema.server");
+const followModel = mongoose.model("FollowModel", followSchema);
 
-//crud operations
-
+//Get all follows
 getAllFollow = () => {
     return followModel.find()
         .populate('follower')
@@ -11,79 +10,66 @@ getAllFollow = () => {
         .exec();
 };
 
-//create Follow
+//create follow
 createFollow = (newFollow) => {
-    return followModel.findOne({follower:newFollow.follower,following:newFollow.following})
-        .then(function (response) {
-            //console.log(response);
-            if (response===null){
-                followModel.create(newFollow);
-            }
-        });
+    return followModel.findOne({
+        follower: newFollow.follower,
+        following: newFollow.following
+    }).then(function (response) {
+        if (response === null) {
+            followModel.create(newFollow);
+        }
+    });
 };
 
-//delete follows
+//delete follows by follow id
 deleteFollows = (followId) => {
-    return followModel.remove({_id:followId});
+    return followModel.remove({
+        _id: followId
+    });
 };
 
 
-// delete a follow
-function deleteFollow(follower,following) {
-    return followModel.findOne({follower:follower, following:following})
-        .then(function (follow) {
-            console.log(follow);
-            followModel.remove({_id:follow._id})
-                .then(function (response) {
-                    //console.log(response);
-                });
-        });
-}
+// delete a follow by follower and following id
+deleteFollow = (follower, following) => {
+    return followModel.findOne({
+        follower: follower,
+        following: following
+    }).then(function (follow) {
+        followModel.remove({_id: follow._id})
+            .then(function (response) {
+                //console.log(response);
+            });
+    });
+};
 
-//find followers
-function findAllFollowers(followerId) {
+//find followers of users
+findAllFollowers = (followerId) => {
     //console.log(followerId);
     return followModel
-        .find({following:followerId})
+        .find({following: followerId})
         .populate('follower')
         .populate('following')
         .exec();
-}
+};
 
-//find following
-
-function findAllFollowing(userId) {
+//find following users
+findAllFollowing = (userId) => {
     return followModel
-        .find({follower:userId})
+        .find({follower: userId})
         .populate('follower')
         .populate('following')
         .exec();
-}
+};
 
-// //delete following when user deletes profile
-// function deleteFollowing(userId) {
-//     return followModel.find({follower:userId})
-//         .then(function (followlist) {
-//             followModel.find({following:userId})
-//                 .then(function (list) {
-//                     Array.prototype.push.apply(followlist,list);
-//                     for (let v of followlist){
-//                         console.log('follower:'+followlist[v].follower + ':following: '+followlist[v].following);
-//                         deleteFollow(followlist[v].follower,followlist[v].following);
-//                         deleteFollow(followlist[v].following,followlist[v].follower);
-//                     }
-//                 });
-//         });
-// }
-
-//delete following when user deletes profile
+//delete follows when admin deletes user profile
 function deleteFollowing(userId) {
     return followModel.deleteMany({}).populate({
-        path:'follower',match:{_id:userId}
+        path: 'follower', match: {_id: userId}
     }).then(
         stats => {
             return followModel.deleteMany({}).populate({
-                path:'following',match:{_id:userId}
+                path: 'following', match: {_id: userId}
             })
         }
     )

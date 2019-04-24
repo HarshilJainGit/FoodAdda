@@ -7,22 +7,22 @@ createReview = (newReview) =>
 
 getReviews = (restId) =>
     reviewModel.find({
-        restaurantId:restId
+        restaurantId: restId
     }).populate('user');
 
 getReviewsByUser = (userId) =>
     reviewModel.find().populate({
-        path:'user',match:{_id:userId}
+        path: 'user', match: {_id: userId}
     });
 
 delReviewsForRest = (restId) =>
     reviewModel.deleteMany({
-        restaurantId:restId
+        restaurantId: restId
     });
 
 deleteReviewsForUser = (userId) =>
     reviewModel.deleteMany().populate({
-        path:'user', match:{_id:userId}
+        path: 'user', match: {_id: userId}
     });
 
 module.exports = {

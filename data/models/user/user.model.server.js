@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
 const userSchema = require('./user.schema.server');
 const userModel = mongoose.model('UserModel', userSchema);
-const followModel=require("../follow/follow.model.server");
 
 findAllUsers = () =>
     userModel.find();
 
 findUserByUserName = (userName) =>
     userModel.findOne({
-        userName : String(userName)
+        userName: String(userName)
     });
 
-findUserByCredentials = (userName,passWord) =>
+findUserByCredentials = (userName, passWord) =>
     userModel.findOne({
         userName: userName,
         passWord: passWord
@@ -25,17 +24,19 @@ findUserById = (userId) =>
         _id: userId
     });
 
-addToFavourites = (userId,restId) =>
+addToFavourites = (userId, restId) =>
     userModel.update(
         {_id: userId}
-        ,{$push: {favRest:restId}
+        , {
+            $push: {favRest: restId}
         }
     );
 
-createRestList = (userId,restId) =>
+createRestList = (userId, restId) =>
     userModel.update(
         {_id: userId}
-        ,{$push: {createdRest:restId}
+        , {
+            $push: {createdRest: restId}
         }
     );
 
@@ -46,7 +47,7 @@ getUserFavs = (userId) =>
 
 getUserCreatedRest = (userId) =>
     userModel.findOne(
-        {_id:userId},{createdRest:1, _id:0}
+        {_id: userId}, {createdRest: 1, _id: 0}
     );
 
 deleteUser = (userId) =>
@@ -54,18 +55,18 @@ deleteUser = (userId) =>
         _id: userId
     });
 
-updateUser = (userId,updUser) =>
+updateUser = (userId, updUser) =>
     userModel.updateOne(
-        {_id:userId},{$set:updUser}
+        {_id: userId}, {$set: updUser}
     );
 
-deleteFromFavourites = (userId,restId) =>
-    userModel.update({_id:userId},
-        {$pull:{favRest:restId}}
+deleteFromFavourites = (userId, restId) =>
+    userModel.update({_id: userId},
+        {$pull: {favRest: restId}}
     );
 
 // add to followers
-addToFollowers = (userId,followerId) => {
+addToFollowers = (userId, followerId) => {
     return userModel.findById(userId)
         .then(function (user) {
             user.followers.push(followerId);
@@ -74,7 +75,7 @@ addToFollowers = (userId,followerId) => {
 };
 
 // add to following
-addToFollowing = (userId,followingId) => {
+addToFollowing = (userId, followingId) => {
     return userModel.findById(userId)
         .then(function (user) {
             user.following.push(followingId);
@@ -83,26 +84,26 @@ addToFollowing = (userId,followingId) => {
 };
 
 //remove follower
-removeFollower = (userId,followerId) => {
+removeFollower = (userId, followerId) => {
     return userModel.findById(userId)
         .then(function (user) {
-            var index= user.followers.indexOf(followerId);
-            user.followers.splice(index,1);
+            var index = user.followers.indexOf(followerId);
+            user.followers.splice(index, 1);
             return user.save();
         })
 };
 
-removeFollowing = (userId,followingId) => {
+removeFollowing = (userId, followingId) => {
     return userModel.findById(userId)
         .then(function (user) {
-            var index=user.following.indexOf(followingId);
-            user.following.splice(index,1);
+            var index = user.following.indexOf(followingId);
+            user.following.splice(index, 1);
             return user.save();
         });
 };
 
 // add to followers
-addToFollowers = (userId,followerId) => {
+addToFollowers = (userId, followerId) => {
     return userModel.findById(userId)
         .then(function (user) {
             user.followers.push(followerId);
@@ -122,9 +123,5 @@ module.exports = {
     updateUser,
     deleteFromFavourites,
     createRestList,
-    getUserCreatedRest,
-    addToFollowers,
-    removeFollowing,
-    removeFollower,
-    addToFollowing
+    getUserCreatedRest
 };
