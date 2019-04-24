@@ -56,7 +56,7 @@ app.get('/home', (req, res) => {
         location: 'san francisco, ca',
         sort_by: 'rating'
     }).then(response => {
-        res.send(response);
+        res.send(response.jsonBody.businesses);
     }).catch(e => {
         console.log(e);
     });
