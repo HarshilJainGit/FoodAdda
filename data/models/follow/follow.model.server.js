@@ -60,20 +60,33 @@ function findAllFollowing(userId) {
         .exec();
 }
 
+// //delete following when user deletes profile
+// function deleteFollowing(userId) {
+//     return followModel.find({follower:userId})
+//         .then(function (followlist) {
+//             followModel.find({following:userId})
+//                 .then(function (list) {
+//                     Array.prototype.push.apply(followlist,list);
+//                     for (let v of followlist){
+//                         console.log('follower:'+followlist[v].follower + ':following: '+followlist[v].following);
+//                         deleteFollow(followlist[v].follower,followlist[v].following);
+//                         deleteFollow(followlist[v].following,followlist[v].follower);
+//                     }
+//                 });
+//         });
+// }
+
 //delete following when user deletes profile
 function deleteFollowing(userId) {
-    return followModel.find({follower:userId})
-        .then(function (followlist) {
-            followModel.find({following:userId})
-                .then(function (list) {
-                    Array.prototype.push.apply(followlist,list);
-                    for (let v of followlist){
-                        console.log('follower:'+followlist[v].follower + ':following: '+followlist[v].following);
-                        deleteFollow(followlist[v].follower,followlist[v].following);
-                        deleteFollow(followlist[v].following,followlist[v].follower);
-                    }
-                });
-        });
+    followModel.deleteMany({}).populate({
+        path:'follower',match:{_id:userId}
+    }).then(
+        stats => {
+            return followModel.deleteMany({}).populate({
+                path:'following',match:{_id:userId}
+            })
+        }
+    )
 }
 
 module.exports = {
