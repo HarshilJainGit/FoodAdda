@@ -509,4 +509,12 @@ app.get    ("/api/getFollowing/:id",getFollowing);
 app.get    ("/api/getallfollow",getAllFollow);
 app.delete ("/api/deletefollow/:id",deleteFollow);
 
+updRestaurant = (req,res) => {
+    restDao.updateRest(req.params.id,req.body).then(
+        status => res.send(status)
+    )
+};
+
+app.put('/api/restaurant/:id/update',updRestaurant);
+
 app.listen(process.env.PORT || 4000);

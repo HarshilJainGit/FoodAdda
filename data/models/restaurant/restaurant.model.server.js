@@ -14,9 +14,15 @@ getRestaurantById = (restId) =>
 getRecentRests = () =>
     restModel.find().sort({id:-1});
 
+updateRest = (restId,newRest) =>
+    restModel.update({id:restId}
+        ,{$set:newRest}
+    );
+
 module.exports = {
     createRestaurant,
     getRestaurantById,
     getRests,
-    getRecentRests
+    getRecentRests,
+    updateRest
 };

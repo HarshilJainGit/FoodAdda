@@ -20,9 +20,15 @@ getRecentRests = () =>
         rests => rests
     );
 
+updateRest = (restId,newRest) =>
+    restModel.updateRest(restId,newRest).then(
+        status => status
+    );
+
 module.exports = {
     createRestaurant,
     getRestaurants,
     getRestaurantById,
-    getRecentRests
+    getRecentRests,
+    updateRest
 };
