@@ -363,6 +363,7 @@ app.get('/api/profile/:id',getUserById);
 getRecentRests = (req,res) => {
     restDao.getRecentRests().then(
         rests => {
+            console.log('Recent: '+rests);
             res.send(rests);
         }
     )
@@ -388,7 +389,7 @@ getRestCreated = (req,res) => {
                 (createdRest) => res.send(createdRest)
             )
     } else {
-        res.sendStatus(403)
+        res.sendStatus(403);
     }
 };
 
