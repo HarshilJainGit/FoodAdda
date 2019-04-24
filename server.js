@@ -255,8 +255,12 @@ delUser = (req,res) => {
         () => {
             return followModel.deleteFollowing(req.params.id).then(
                 status => {
-                    return userModel.findAllUsers().then(
-                        users => res.send(users)
+                    return revModel.deleteReviewsForUser(req.params.id).then(
+                        rets => {
+                            return userModel.findAllUsers().then(
+                                users => res.send(users)
+                            )
+                        }
                     )
                 }
             )

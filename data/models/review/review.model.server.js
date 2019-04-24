@@ -20,9 +20,15 @@ delReviewsForRest = (restId) =>
         restaurantId:restId
     });
 
+deleteReviewsForUser = (userId) =>
+    reviewModel.deleteMany().populate({
+        path:'user', match:{_id:userId}
+    });
+
 module.exports = {
     createReview,
     getReviews,
     getReviewsByUser,
-    delReviewsForRest
+    delReviewsForRest,
+    deleteReviewsForUser
 };
