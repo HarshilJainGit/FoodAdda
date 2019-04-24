@@ -68,6 +68,7 @@ function deleteFollowing(userId) {
                 .then(function (list) {
                     Array.prototype.push.apply(followlist,list);
                     for (let v of followlist){
+                        console.log('follower:'+followlist[v].follower + ':following: '+followlist[v].following);
                         deleteFollow(followlist[v].follower,followlist[v].following);
                         deleteFollow(followlist[v].following,followlist[v].follower);
                     }
