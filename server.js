@@ -54,7 +54,7 @@ app.get('/home', (req, res) => {
     let rest = [];
     client.search({
         location: 'san francisco, ca',
-        categories: 'food',
+        categories: 'Food',
         sort_by: 'rating'
     }).then(response => {
         res.send(response.jsonBody.businesses);
