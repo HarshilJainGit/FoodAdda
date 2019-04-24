@@ -15,8 +15,14 @@ getReviewsByUser = (userId) =>
         path:'user',match:{_id:userId}
     });
 
+delReviewsForRest = (restId) =>
+    reviewModel.deleteMany({
+        restaurantId:restId
+    });
+
 module.exports = {
     createReview,
     getReviews,
-    getReviewsByUser
+    getReviewsByUser,
+    delReviewsForRest
 };

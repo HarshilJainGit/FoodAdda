@@ -253,8 +253,12 @@ app.get('/api/favrest',getFavs);
 delUser = (req,res) => {
     userModel.deleteUser(req.params.id).then(
         () => {
-            return userModel.findAllUsers().then(
-                users => res.send(users)
+            return followModel.deleteFollowing.then(
+                status => {
+                    return userModel.findAllUsers().then(
+                        users => res.send(users)
+                    )
+                }
             )
         }
     )
@@ -517,7 +521,12 @@ app.put('/api/restaurant/:id/update',updRestaurant);
 deleteRest = (req,res) => {
     restDao.deleteRest(req.params.id).then(
         status => {
-            res.send(status);
+            return revModel.delReviewsForRest(req.params.id).then(
+                stats => {
+                    res.send(stats);
+                }
+            )
+
         }
     )
 }
