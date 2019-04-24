@@ -361,16 +361,14 @@ getUserById = (req,res) => {
 app.get('/api/profile/:id',getUserById);
 
 getRecentRests = (req,res) => {
-    console.log('In recent rests');
     restDao.getRecentRests().then(
         rests => {
-            console.log('Recent: '+rests);
             res.send(rests);
         }
     )
 };
 
-app.get('/api/restaurant/recent',getRecentRests);
+app.get('/api/restaurantList/recent',getRecentRests);
 
 getReviewsByUser = (req,res) => {
     revModel.getReviewsByUser(req.params.id).then(
